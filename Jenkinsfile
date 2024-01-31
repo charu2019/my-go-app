@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the Docker image
-                sh 'docker build -f /home/ubuntu/charu/my-go-app/Dockerfile'
+                sh 'docker build -t my-go-app'
             }
         }
 
