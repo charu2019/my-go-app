@@ -4,8 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the Docker image
-                sh 'docker build -t my-go-app'
+                script {
+                    // Install buildx component
+                    sh 'docker buildx version || docker run --rm --privileged multiarch/qemu-user-static --reset -p yes'
+                    sh 'docker buildx create --use'
+                    sh 'docker buildx inspect --bootstrap'
+
+                    // Build the Docker image with the specified Dockerfile
+                    sh 'docker buildx build -t my-go-app .'
+                }
             }
         }
 
